@@ -1,0 +1,13 @@
+
+plugins=(
+    colored-man-pages
+    colorize
+    kubectl
+    zsh-autosuggestions
+    zsh-interactive-cd
+)
+
+source $ZSH/oh-my-zsh.sh
+
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export PATH="${PATH}:${HOME}/.krew/bin"
