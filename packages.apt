@@ -1,2 +1,4 @@
 git
 curl
+ca-certificates
+wget

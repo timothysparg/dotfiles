@@ -1,8 +1,9 @@
 #!/bin/bash
 
 current_dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
-source $current_dir/../common.sh
-ln -fs $current_dir/vimrc ~/.vimrc
+# shellcheck source=../common.sh
+source "${current_dir}"/../common.sh
+ln -fs "${current_dir}"/vimrc ~/.vimrc
 
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

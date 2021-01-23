@@ -1,7 +1,8 @@
 #!/bin/bash
 
 current_dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
-source $current_dir/../common.sh
+# shellcheck source=../common.sh
+source "${current_dir}"/../common.sh
 
 cd "$(mktemp -d)"
 curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew.tar.gz"
