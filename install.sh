@@ -55,15 +55,6 @@ read_args() {
     set -- "${POSITIONAL[@]}" # restore positional parameters
 }
 
-setup_ca_certificates() {
-    if [ ! -d /usr/local/share/ca-certificates/cacert.org ]; then
-        sudo mkdir /usr/local/share/ca-certificates/cacert.org
-        sudo wget -P /usr/local/share/ca-certificates/cacert.org http://www.cacert.org/certs/root.crt http://www.cacert.org/certs/class3.crt
-        sudo update-ca-certificates
-        git config --global http.sslCAinfo /etc/ssl/certs/ca-certificates.crt
-    fi
-}
-
 install_exclude_message() {
     if [ -n "$install_exclude" ]; then
         if [ $# -eq 0 ]; then
