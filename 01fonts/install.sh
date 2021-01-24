@@ -3,7 +3,7 @@
 download(){
     base_url="https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/JetBrainsMono"
     subfolder="$1"
-    font=$(urlencode "$2")
+    font=$(urlEncode "$2")
     
     url="${base_url}/${subfolder}/${font}"
     curl -fLo "$2" "$url"

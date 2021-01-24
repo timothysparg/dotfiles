@@ -84,7 +84,7 @@ println() {
 }
 
 # https://gist.github.com/cdown/1163649
-urlencode() {
+urlEncode() {
     # urlencode <string>
 
     old_lc_collate=$LC_COLLATE
@@ -102,9 +102,16 @@ urlencode() {
     LC_COLLATE=$old_lc_collate
 }
 
-urldecode() {
+urlDecode() {
     # urldecode <string>
 
     local url_encoded="${1//+/ }"
     printf '%b' "${url_encoded//%/\\x}"
+}
+
+installerName(){
+    dir_name="$1"
+    dir_name=${dir_name//[0-9]/}
+    dir_name=$(echo $dir_name | awk '{print substr($0,3)}' | cut -d / -f 1)
+    echo "${dir_name}"
 }

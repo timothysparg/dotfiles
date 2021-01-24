@@ -8,19 +8,23 @@ main() {
     println "${Green}\tGathering packages"
     # set -x
     while read -r pkg; do
-        echo "$pkg"
-        mapfile -t -O "${#pkgs[@]}" pkgs <$pkg
+        dir_name=$(installerName "${pkg}")
+        if [[ -n "${install_exclude}" && "${dir_name}" == *"${install_exclude}"* ]]; then
+             println "${BYellow}\tIgnoring apt packages from ${dir_name}"
+        else
+            println "${BBlue}\t${pkg}"
+            mapfile -t -O "${#pkgs[@]}" pkgs <"${pkg}"
+        fi
     done <<<"$(find . -name packages.apt)"
 
-    println "${Green}\tInstalling"
+    println "${On_Green}Installing"
     sudo apt update
     sudo apt install -y --no-install-recommends "${pkgs[@]}"
     setup_ca_certificates
 
     # find the installers and run them iteratively
     find . -mindepth 2 -name install.sh | while read -r installer; do
-        dir_name=${installer//[0-9]/}
-        dir_name=$(echo "$dir_name" | awk '{print substr($0,3)}' | cut -d / -f 1)
+        dir_name=$(installerName "${installer}")
         if [[ -n "${install_exclude}" && "${dir_name}" == *"${install_exclude}"* ]]; then
             install_exclude_message "${dir_name}"
         else
@@ -51,7 +55,7 @@ read_args() {
     set -- "${POSITIONAL[@]}" # restore positional parameters
 }
 
-setup_ca_certificates(){
+setup_ca_certificates() {
     sudo mkdir /usr/local/share/ca-certificates/cacert.org
     sudo wget -P /usr/local/share/ca-certificates/cacert.org http://www.cacert.org/certs/root.crt http://www.cacert.org/certs/class3.crt
     sudo update-ca-certificates
