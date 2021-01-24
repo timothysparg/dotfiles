@@ -10,7 +10,7 @@ main() {
     while read -r pkg; do
         dir_name=$(installerName "${pkg}")
         if [[ -n "${install_exclude}" && "${dir_name}" == *"${install_exclude}"* ]]; then
-             println "${BYellow}\tIgnoring apt packages from ${dir_name}"
+            println "${BYellow}\tIgnoring apt packages from ${dir_name}"
         else
             println "${BBlue}\t${pkg}"
             mapfile -t -O "${#pkgs[@]}" pkgs <"${pkg}"
@@ -56,10 +56,12 @@ read_args() {
 }
 
 setup_ca_certificates() {
-    sudo mkdir /usr/local/share/ca-certificates/cacert.org
-    sudo wget -P /usr/local/share/ca-certificates/cacert.org http://www.cacert.org/certs/root.crt http://www.cacert.org/certs/class3.crt
-    sudo update-ca-certificates
-    git config --global http.sslCAinfo /etc/ssl/certs/ca-certificates.crt
+    if [ ! -d /usr/local/share/ca-certificates/cacert.org ]; then
+        sudo mkdir /usr/local/share/ca-certificates/cacert.org
+        sudo wget -P /usr/local/share/ca-certificates/cacert.org http://www.cacert.org/certs/root.crt http://www.cacert.org/certs/class3.crt
+        sudo update-ca-certificates
+        git config --global http.sslCAinfo /etc/ssl/certs/ca-certificates.crt
+    fi
 }
 
 install_exclude_message() {
