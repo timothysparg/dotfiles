@@ -20,7 +20,6 @@ main() {
     println "${On_Green}Installing"
     sudo apt update
     sudo apt install -y --no-install-recommends "${pkgs[@]}"
-    setup_ca_certificates
 
     # find the installers and run them iteratively
     find . -mindepth 2 -name install.sh | while read -r installer; do
