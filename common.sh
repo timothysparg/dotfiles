@@ -112,6 +112,12 @@ urlDecode() {
 installerName(){
     dir_name="$1"
     dir_name=${dir_name//[0-9]/}
-    dir_name=$(echo $dir_name | awk '{print substr($0,3)}' | cut -d / -f 1)
-    echo "${dir_name}"
+    echo $dir_name | awk '{print substr($0,3)}' | cut -d / -f 1
+}
+
+# https://gist.github.com/lukechilds/a83e1d7127b78fef38c2914c4ececc3c
+get_latest_github_release() {
+    curl --silent "https://api.github.com/repos/$1/releases/latest" | # Get latest release from GitHub api
+    grep '"tag_name":' |                                            # Get tag line
+    sed -E 's/.*"([^"]+)".*/\1/'                                    # Pluck JSON value
 }

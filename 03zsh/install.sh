@@ -9,7 +9,7 @@ if [ ! -d ~/.oh-my-zsh ]; then
     sudo chsh -s /bin/zsh "$(whoami)"
     ln -fs "$current_dir"/zshrc ~/.zshrc
 
-    git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}"/plugins/zsh-autosuggestions
+    git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"/plugins/zsh-autosuggestions
 
     curl -L https://github.com/alecthomas/chroma/releases/download/v0.8.2/chroma-0.8.2-linux-amd64.tar.gz -o chroma-0.8.2-linux-amd64.tar.gz
     mkdir chroma
